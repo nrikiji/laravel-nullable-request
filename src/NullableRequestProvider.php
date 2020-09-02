@@ -11,7 +11,11 @@ class NullableRequestProvider extends ServiceProvider
     {
         $this->app['validator']->resolver(function ($translator, $data, $rules, $messages, $customAttributes) {
             foreach ($rules as $k => $v) {
-                if (is_string($v) && !in_array('nullable', explode('|', $v))) {
+                $rules2 = $v;
+                if (is_string($rules2)) {
+                    $rules2 = explode('|', $rules2);
+                }
+                if (!in_array('nullable', $rules2)) {
                     continue;
                 }
                 if (array_key_exists($k, $data)) {
